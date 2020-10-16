@@ -3,6 +3,8 @@ data.sort(function(a, b) {
   return parseFloat(b.greekSearchResults) - parseFloat(a.greekSearchResults);
 });
 
+
+
 // Slice the first 10 objects for plotting
 data = data.slice(0, 10);
 
