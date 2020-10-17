@@ -45,7 +45,7 @@ function buildMetadata(sample) {
 
     // Use `.html("") to clear any existing metadata
     PANEL.html("");
-
+    console.log("in_build_Metadata")
     // Use `Object.entries` to add each key and value pair to the panel
     // Hint: Inside the loop, you will need to use d3 to append new
     // tags for each key-value in the metadata.
@@ -55,17 +55,7 @@ function buildMetadata(sample) {
 
   });
 }
-function buildMetadata(sample) {
-  d3.json("samples.json").then((data) => {
-    var metadata = data.metadata;
-    var resultArray = metadata.filter(sampleObj => sampleObj.id == sample);
-    var result = resultArray[0];
-    var PANEL = d3.select("#sample-metadata");
 
-    PANEL.html("");
-    PANEL.append("h6").text(result.location);
-  });
-}
 
 // 1. Create the buildCharts function.
 function buildCharts(sample) {
@@ -94,7 +84,7 @@ function buildCharts(sample) {
     // 7. Create the yticks for the bar chart.
     // Hint: Get the the top 10 otu_ids and map them in descending order  
     //  so the otu_ids with the most bacteria are last. 
-    console.log(otu_ids)
+    console.log("hello hello hello")
     var yticks = otu_ids.map(function(id){
       return "OTU ".concat(id);
   });
@@ -117,5 +107,42 @@ function buildCharts(sample) {
      };
     // 10. Use Plotly to plot the data with the layout. 
     Plotly.newPlot("bar", barData, layout);
+
+    // 1. Create the trace for the bubble chart.
+    var bubbleData = {
+      x: otu_ids,
+      y: sample_values,
+      text: otu_labels,
+      mode: 'markers',
+      hovertemplate: '(%{x}, %{y})<br>'+'%{text}',
+      marker: {
+        color: otu_ids,
+        size: sample_values,
+        colorscale: 'Earth'
+      }
+    };
+    var data = [bubbleData];
+    
+
+    // 2. Create the layout for the bubble chart.
+    var bubbleLayout = {
+      title: 'Bacteria Cultures per Sample',
+      hovermode: "closest",
+      xaxis: {
+        title: {
+          text: 'OTU ID',
+        },
+      },
+      showlegend: false,
+      height: 600,
+      width: 1200
+    };
+
+    // 3. Use Plotly to plot the data with the layout.
+    Plotly.newPlot('bubble', data, bubbleLayout);
+        
   });
 }
+// plotly_deploy>python -m http.server 8000 --bind 127.0.0.2
+
+
