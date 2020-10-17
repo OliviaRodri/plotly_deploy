@@ -109,8 +109,11 @@ function buildCharts(sample) {
     var layout = {
       title: "<b>Top 10 Bacteria Cultures Found</b>",
       type: "indicator",
+      height: 450,
+      width: 450
 
      };
+     var config = {responsive: true}
     // 10. Use Plotly to plot the data with the layout. 
     Plotly.newPlot("bar", barData, layout);
 
@@ -141,9 +144,10 @@ function buildCharts(sample) {
         },
       },
       showlegend: false,
-      height: 600,
-      width: 1200
+      height: 450,
+      width: 1150
     };
+    var config = {responsive: true}
 
     // 3. Use Plotly to plot the data with the layout.
     Plotly.newPlot('bubble', data, bubbleLayout);
@@ -174,7 +178,7 @@ function buildCharts(sample) {
       }
     ];
     
-    var gauge_layout = { width: 600, height: 450, margin: { t: 0, b: 0 } };
+    var gauge_layout = { width: 450, height: 450};// margin: { t: 0, b: 0 } };
     
     Plotly.newPlot('gauge', gauge_data, gauge_layout);
 
