@@ -114,7 +114,7 @@ function buildCharts(sample) {
       y: sample_values,
       text: otu_labels,
       mode: 'markers',
-      hovertemplate: '(%{x}, %{y})<br>'+'%{text}',
+      hovertemplate: '(%{x}, %{y})<br>'+'%{text}<extra> </extra>',
       marker: {
         color: otu_ids,
         size: sample_values,
@@ -140,9 +140,25 @@ function buildCharts(sample) {
 
     // 3. Use Plotly to plot the data with the layout.
     Plotly.newPlot('bubble', data, bubbleLayout);
-        
+
+
+    // 4. Create the trace for the gauge chart.
+    var gaugeData = [
+     
+    ];
+    
+    // 5. Create the layout for the gauge chart.
+    var gaugeLayout = { 
+     
+    };
+
+    // 6. Use Plotly to plot the gauge data and layout.
+    
   });
 }
+
+        
+
 // plotly_deploy>python -m http.server 8000 --bind 127.0.0.2
 
 
