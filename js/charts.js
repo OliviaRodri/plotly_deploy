@@ -68,6 +68,11 @@ function buildCharts(sample) {
     //  5. Create a variable that holds the first sample in the array.
     var first_sample = filtered_samples[0];
 
+    var metadata = data.metadata;
+    // Filter the data for the object with the desired sample number
+    var resultArray = metadata.filter(sampleObj => sampleObj.id == sample);
+    var result = resultArray[0];
+    var wash_frequency = result.wfreq;
     // 6. Create variables that hold the otu_ids, otu_labels, and sample_values.
     var otu_ids = first_sample.otu_ids
     var otu_labels = first_sample.otu_labels
@@ -87,7 +92,7 @@ function buildCharts(sample) {
     console.log("hello hello hello")
     var yticks = otu_ids.map(function(id){
       return "OTU ".concat(id);
-  });
+    });
     console.log(yticks.slice(0,10))
 
     // 8. Create the trace for the bar chart.
@@ -140,25 +145,43 @@ function buildCharts(sample) {
 
     // 3. Use Plotly to plot the data with the layout.
     Plotly.newPlot('bubble', data, bubbleLayout);
+    
+    
+    // Gauge Begins
 
-
-    // 4. Create the trace for the gauge chart.
-    var gaugeData = [
-     
+    var gauge_data = [
+      {
+        domain: { x: [0, 1], y: [0, 1] },
+        value: wash_frequency,
+        title: { text: '<b>FIRST LINE</b> <br>'+"Scrubs per week" },
+        type: "indicator",
+        mode: "gauge+number",
+        //delta: { reference: 380 },
+        gauge: {
+          axis: { range: [null, 10] },
+          bar: {color: "black"},
+          steps: [
+            { range: [0, 2], color: "red" },
+            { range: [2, 4], color: "orange" },
+            { range: [4, 6], color: "yellow" },
+            { range: [6, 8], color: "lightgreen" },
+            { range: [8, 10], color: "green" }
+          ]
+          
+        }
+      }
     ];
     
-    // 5. Create the layout for the gauge chart.
-    var gaugeLayout = { 
-     
-    };
+    var gauge_layout = { width: 600, height: 450, margin: { t: 0, b: 0 } };
+    
+    Plotly.newPlot('gauge', gauge_data, gauge_layout);
 
-    // 6. Use Plotly to plot the gauge data and layout.
     
   });
 }
 
         
 
-// plotly_deploy>python -m http.server 8000 --bind 127.0.0.2
+// python -m http.server 8000 --bind 127.0.0.2
 
 
